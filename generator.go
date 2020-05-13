@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"io"
+	"log"
 	"sync"
 	"time"
 )
@@ -34,6 +35,10 @@ func DefaultGenerator() *Generator {
 // of error checking. Source should have enough bytes to cover double the
 // entropy length (UID reads the entropy length twice).
 func NewGenerator(enc EncoderToString, source io.Reader, entropyLen int) *Generator {
+	if entropyLen < 1 {
+		entropyLen = 1
+		log.Println("illegal value; entropy length coerced to 1")
+	}
 	return &Generator{
 		encoder:  enc,
 		lastRand: make([]byte, entropyLen),
@@ -57,6 +62,7 @@ func (gen *Generator) OID() string {
 	defer gen.mu.Unlock()
 
 	now := time.Now().UnixNano()
+	// now = int64(2398476238476) // debugging
 
 	// if we have the same time, just inc lastRand, else create a new one
 	if now == gen.lastTime {
