@@ -60,7 +60,7 @@ func (gen *Generator) OID() string {
 
 	// if we have the same time, just inc lastRand, else create a new one
 	if now == gen.lastTime {
-		gen.lastRand[7]++
+		gen.lastRand[len(gen.lastRand)-1]++
 	} else {
 		gen.source.Read(gen.lastRand)
 	}
