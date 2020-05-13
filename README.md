@@ -1,5 +1,11 @@
 # oid/uid
 
+[![GoDoc](https://godoc.org/github.com/henderjon/uid?status.svg)](https://godoc.org/github.com/henderjon/uid)
+[![License: BSD-3](https://img.shields.io/badge/license-BSD--3-blue.svg)](https://img.shields.io/badge/license-BSD--3-blue.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/henderjon/uid)](https://goreportcard.com/report/github.com/henderjon/uid)
+![tag](https://img.shields.io/github/tag/henderjon/uid.svg)
+![release](https://img.shields.io/github/release/henderjon/uid.svg)
+
 This package provides the ability to generate Un/Sortable Identifiers. These
 are also most likely very unique. At the very least, they are unique
 enough for my purposes, and potentially yours as well.

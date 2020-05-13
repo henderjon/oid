@@ -8,7 +8,9 @@ import (
 )
 
 var (
-	MathSource   io.Reader = mathSource{}
+	// MathSource uses math/rand
+	MathSource io.Reader = mathSource{}
+	// CryptoSource uses crypto/rand
 	CryptoSource io.Reader = cryptoSource{}
 )
 
