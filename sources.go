@@ -9,23 +9,17 @@ import (
 
 var (
 	// MathSource uses math/rand
-	MathSource io.Reader = mathSource{}
+	MathSource io.Reader = readerFunc(mrand.Read)
 	// CryptoSource uses crypto/rand
-	CryptoSource io.Reader = cryptoSource{}
+	CryptoSource io.Reader = readerFunc(crand.Read)
 )
 
 func init() {
 	mrand.Seed(time.Now().UnixNano())
 }
 
-type mathSource struct{}
+type readerFunc func(p []byte) (n int, err error)
 
-func (s mathSource) Read(p []byte) (n int, err error) {
-	return mrand.Read(p)
-}
-
-type cryptoSource struct{}
-
-func (s cryptoSource) Read(p []byte) (n int, err error) {
-	return crand.Read(p)
+func (s readerFunc) Read(p []byte) (n int, err error) {
+	return s(p)
 }
