@@ -20,8 +20,9 @@ func (e Encoder) EncodeToString(b []byte) string {
 
 var (
 	// Crockford32 is a base 32 dictionary from Dougland Crockford
+	// (https://www.crockford.com/base32.html)
 	Crockford32 = base32.NewEncoding("0123456789abcdefghjkmnpqrstvwxyz").WithPadding(base32.NoPadding)
-	// Hex is a typical hex representation of bytes. I'm casting it here to allow for a top level
-	// package function to satisfy a proper interface.
+	// Hex is a typical hex representation of bytes. I'm casting it here to
+	// allow for a top level package function to satisfy a proper interface.
 	Hex = Encoder(hex.EncodeToString)
 )
