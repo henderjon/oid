@@ -80,7 +80,7 @@ func (gen *Generator) OID() string {
 	return gen.encoder.EncodeToString(gen.buf.Bytes())
 }
 
-// UID is the same as OID accept that the 8 byte timestamp is replaced with an 8
+// UID is the same as OID except that the 8 byte timestamp is replaced with an 8
 // byte random number. These IDs are not sortable. As opposed to the `func
 // OID()`, the length of the random number is configurable. keep in mind that
 // whatever entropy length is used, this value will be double as the `[]byte` is
