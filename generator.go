@@ -15,7 +15,7 @@ type Generator struct {
 	encoder  EncoderToString
 	lastRand []byte
 	source   io.Reader
-	mu       *sync.Mutex
+	mu       sync.Mutex
 	buf      bytes.Buffer
 }
 
@@ -37,8 +37,7 @@ func NewGenerator(enc EncoderToString, source io.Reader, entropyLen int) *Genera
 	return &Generator{
 		encoder:  enc,
 		lastRand: make([]byte, entropyLen),
-		source:   source,
-		mu:       &sync.Mutex{},
+		source:   source
 	}
 }
 
