@@ -27,11 +27,7 @@
 package uid
 
 import (
-	"bytes"
-	"encoding/base32"
-	"encoding/binary"
 	"math/rand"
-	"sync"
 	"time"
 )
 
@@ -40,18 +36,7 @@ func init() {
 }
 
 var (
-	// Remember the lastTime so that if (by chance) we get the same NanoSecond,
-	// we just incrememt the last random number.
-	lastTime int64
-	// use base32 to make ascii URL safe strings; using Crockfords
-	// dict: https://www.crockford.com/base32.html
-	encoder = base32.NewEncoding("0123456789abcdefghjkmnpqrstvwxyz").WithPadding(base32.NoPadding)
-	// hold 8 bytes of random data
-	lastRand = make([]byte, 8)
-	// handle our own concurrency
-	mu = &sync.Mutex{}
-	// avoid unnecessarily consuming memory
-	buf bytes.Buffer
+	defaultGenerator = DefaultGenerator()
 )
 
 // OID returns a base 32 encoded string based on timestamp and a random number.
@@ -64,39 +49,11 @@ var (
 //
 // It is safe for concurrent use as it provides its own locking.
 func OID() string {
-	// lock for lastTime, lastRand, and chars
-	mu.Lock()
-	defer mu.Unlock()
-
-	now := time.Now().UnixNano()
-
-	// if we have the same time, just inc lastRand, else create a new one
-	if now == lastTime {
-		lastRand[7]++
-	} else {
-		rand.Read(lastRand)
-	}
-
-	// remember this for next time
-	lastTime = now
-
-	buf.Reset() // clean our buffer before use
-	binary.Write(&buf, binary.BigEndian, now)
-	binary.Write(&buf, binary.BigEndian, lastRand)
-	return encoder.EncodeToString(buf.Bytes())
+	return defaultGenerator.OID()
 }
 
 // UID is the same as OID accept that the 8 byte timestamp is replaced with
 // an 8 byte random number. These IDs are not sortable.
 func UID() string {
-	// lock for lastTime, lastRand, and chars
-	mu.Lock()
-	defer mu.Unlock()
-
-	buf.Reset() // clean our buffer before use
-	rand.Read(lastRand)
-	binary.Write(&buf, binary.BigEndian, lastRand)
-	rand.Read(lastRand)
-	binary.Write(&buf, binary.BigEndian, lastRand)
-	return encoder.EncodeToString(buf.Bytes())
+	return defaultGenerator.UID()
 }
