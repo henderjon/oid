@@ -32,7 +32,7 @@ func DefaultGenerator() *Generator {
 // NewGenerator creates a UID/OID generator based on the given source and the
 // given length to be encoded according to the given encoder. There isn't alot
 // of error checking. Source should have enough bytes to cover double the
-// entropy length.
+// entropy length (UID reads the entropy length twice).
 func NewGenerator(enc EncoderToString, source io.Reader, entropyLen int) *Generator {
 	return &Generator{
 		encoder:  enc,
