@@ -4,7 +4,8 @@ import (
 	"encoding/base32"
 	"encoding/base64"
 	"fmt"
-	"local/henderjon/uid"
+
+	"github.com/henderjon/uid"
 )
 
 func main() {

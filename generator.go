@@ -37,7 +37,7 @@ func NewGenerator(enc EncoderToString, source io.Reader, entropyLen int) *Genera
 	return &Generator{
 		encoder:  enc,
 		lastRand: make([]byte, entropyLen),
-		source:   source
+		source:   source,
 	}
 }
 
