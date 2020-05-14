@@ -6,17 +6,8 @@
 //
 // OIDs are sortable, UIDs are not
 //
-// OID returns a 26 char base 32 encoded string based on timestamp and a random
-// number. The base32( binary( XY ) ) where X is the timestamp (8 bytes) and Y
-// is a random number (8 bytes).
-//
-// If (by any chance) OID is called in the same nanosecond, the random number is
-// incremented instead of a new one being generated. This makes sure that two
-// consecutive Ids generated in the same goroutine also ensure those Ids are
-// also sortable.
-//
-// UID is the same as OID accept that the timestamp is replaced with an 8 byte
-// random number. These IDs are not sortable.
+// UID is the same as OID accept that the timestamp is replaced with a second 8
+// byte random number. These IDs are not sortable.
 //
 // The use of math/rand means these are not cryptographically secure.
 //
@@ -30,21 +21,39 @@ var (
 	defaultGenerator = DefaultGenerator()
 )
 
-// OID returns a base 32 encoded string based on timestamp and a random number.
-// The `base32( binary( XY ) )` where X is an int64 timestamp (8 bytes) and Y is
-// a random number (8 bytes).
+// OID returns a base 32 encoded binary encoded string based on timestamp and a
+// random number.
+//
+//  +--------+--------+
+//  |   TS   |   Ent  |
+//  +--------+--------+
+//
+// TS is the binary encoding of an int64 (8 byte) Unix Timestamp in Nanoseconds
+// Ent is the binary encoding of an 8 byte random number
+//
+// The 16 bytes are then base32 encoded for human readability and URL safety.
 //
 // If (by any chance) OID is called in the same nanosecond, the random number is
 // incremented instead of a new one being generated. This makes sure that two
 // consecutive IDs generated in the same goroutine are different and sortable.
 //
 // It is safe for concurrent use as it provides its own locking.
+//
+// OID will run out of nanoseconds on Fri, 11 Apr 2262 23:47:16 UTC
 func OID() string {
 	return defaultGenerator.OID()
 }
 
 // UID is the same as OID accept that the 8 byte timestamp is replaced with
 // an 8 byte random number. These IDs are not sortable.
+//
+//  +--------+--------+
+//  |  Ent   |   Ent  |
+//  +--------+--------+
+//
+// Ent is the binary encoding of an 8 byte random number
+//
+// The 16 bytes are then base32 encoded for human readability and URL safety.
 func UID() string {
 	return defaultGenerator.UID()
 }

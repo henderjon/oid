@@ -33,7 +33,16 @@ func DefaultGenerator() *Generator {
 // NewGenerator creates a UID/OID generator based on the given source and the
 // given length to be encoded according to the given encoder. There isn't alot
 // of error checking. Source should have enough bytes to cover double the
-// entropy length (UID reads the entropy length twice).
+// entropy length (UID reads the entropy length twice). Entropy length must be
+// greater than 0.
+//
+//  OID                  UID
+//  +--------+--------+  +--------+--------+
+//  |   TS   |   Ent  |  |  Ent   |   Ent  |
+//  +--------+--------+  +--------+--------+
+//
+// TS is the binary encoding of an int64 (8 byte) Unix Timestamp in Nanoseconds
+// Ent is the binary encoding of a >=1 byte random number.
 func NewGenerator(enc EncoderToString, source io.Reader, entropyLen int) *Generator {
 	if entropyLen < 1 {
 		entropyLen = 1
@@ -46,16 +55,8 @@ func NewGenerator(enc EncoderToString, source io.Reader, entropyLen int) *Genera
 	}
 }
 
-// OID returns a base 32 encoded string based on timestamp and a random number.
-// The `base32( binary( XY ) )` where X is an int64 timestamp (8 bytes) and Y is
-// a random number (8 bytes). As opposed to the `func OID()`, the length of the
-// random number is configurable.
-//
-// If (by any chance) OID is called in the same nanosecond, the random number is
-// incremented instead of a new one being generated. This makes sure that two
-// consecutive IDs generated in the same goroutine are different and sortable.
-//
-// It is safe for concurrent use as it provides its own locking.
+// OID is the injectable version of `OID` with a configurable number of random
+// bytes.
 func (gen *Generator) OID() string {
 	// lock for lastTime, lastRand, and chars
 	gen.mu.Lock()
@@ -80,11 +81,9 @@ func (gen *Generator) OID() string {
 	return gen.encoder.EncodeToString(gen.buf.Bytes())
 }
 
-// UID is the same as OID except that the 8 byte timestamp is replaced with an 8
-// byte random number. These IDs are not sortable. As opposed to the `func
-// OID()`, the length of the random number is configurable. keep in mind that
-// whatever entropy length is used, this value will be double as the `[]byte` is
-// used internally twice.
+// UID is the injectable version of `UID` with a configurable number of random
+// bytes. Be mindfull that whatever entropy length is used, the length of UID
+// will be double as the random []byte is used internally twice.
 func (gen *Generator) UID() string {
 	// lock for lastTime, lastRand, and chars
 	gen.mu.Lock()
