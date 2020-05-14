@@ -24,7 +24,7 @@ type Generator struct {
 // This is useful for injecting the default behavior.
 func DefaultGenerator() *Generator {
 	return NewGenerator(
-		Crockford32,
+		Crockford32Encoder,
 		MathSource,
 		8,
 	)

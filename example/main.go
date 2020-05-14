@@ -12,7 +12,7 @@ func main() {
 	fmt.Println("OID\t", uid.OID())
 	fmt.Println("UID\t", uid.UID())
 
-	hex := uid.NewGenerator(uid.Hex, uid.MathSource, 8)
+	hex := uid.NewGenerator(uid.HexEncoder, uid.MathSource, 8)
 	fmt.Println("hex OID\t", hex.OID())
 	fmt.Println("hex UID\t", hex.UID())
 
