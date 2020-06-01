@@ -36,10 +36,10 @@ func DefaultGenerator() *Generator {
 // entropy length (UID reads the entropy length twice). Entropy length must be
 // greater than 0.
 //
-//  OID                  UID
-//  +--------+--------+  +--------+--------+
-//  |   TS   |   Ent  |  |  Ent   |   Ent  |
-//  +--------+--------+  +--------+--------+
+//  OID                      UID
+//  +----------+----------+  +----------+----------+
+//  |   TIME   |   RAND   |  |   RAND   |   RAND   |
+//  +----------+----------+  +----------+----------+
 //
 // TS is the binary encoding of an int64 (8 byte) Unix Timestamp in Nanoseconds
 // Ent is the binary encoding of a >=1 byte random number.

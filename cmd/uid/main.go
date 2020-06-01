@@ -9,7 +9,15 @@ import (
 )
 
 const doc = `
-%s is a simple utility for generating un/order-able IDs
+%s is a simple utility for generating un/ordered IDs.
+
+The default format for an OID is 8 bytes of time and N bytes of randomness. A
+UID is N number of bytes, twice. Where 'N' is the '-len' param.
+
+OID                      UID
++----------+----------+  +----------+----------+
+|   TIME   |   RAND   |  |   RAND   |   RAND   |
++----------+----------+  +----------+----------+
 
 version:  %s
 compiled: %s
