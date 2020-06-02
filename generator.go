@@ -55,7 +55,7 @@ func NewGenerator(enc EncoderToString, source io.Reader, entropyLen int) *Genera
 	}
 }
 
-// OID is the injectable version of `OID` with a configurable number of random
+// OID is the injectable version of `OID()` with a configurable number of random
 // bytes.
 func (gen *Generator) OID() string {
 	// lock for lastTime, lastRand, and chars
@@ -81,7 +81,7 @@ func (gen *Generator) OID() string {
 	return gen.encoder.EncodeToString(gen.buf.Bytes())
 }
 
-// UID is the injectable version of `UID` with a configurable number of random
+// UID is the injectable version of `UID()` with a configurable number of random
 // bytes. Be mindfull that whatever entropy length is used, the length of UID
 // will be double as the random []byte is used internally twice.
 func (gen *Generator) UID() string {

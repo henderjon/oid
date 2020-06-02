@@ -71,7 +71,7 @@ func main() {
 		source = uid.CryptoSource
 	}
 
-	var dict uid.EncoderToString
+	var dict uid.EncoderToString // assert the interface not the struct pointer
 	dict = uid.Crockford32Encoder
 	if hex {
 		dict = uid.HexEncoder

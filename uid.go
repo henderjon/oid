@@ -1,13 +1,10 @@
-// Package uid provides the ability to generate Un/Sortable Identifiers. These
+// Package uid provides the ability to generate Un/Ordered Identifiers. These
 // are also most likely very unique. At the very least, they are unique enough
 // for my purposes, and potentially others' as well.
 //
-// For my purposes simplicity > speed.
+// For my purposes simplicity > ∞.
 //
-// OIDs are sortable, UIDs are not
-//
-// UID is the same as OID accept that the timestamp is replaced with a second 8
-// byte random number. These IDs are not sortable.
+// OIDs are ordered, UIDs are not
 //
 // The use of math/rand means these are not cryptographically secure.
 //
@@ -35,7 +32,7 @@ var (
 //
 // If (by any chance) OID is called in the same nanosecond, the random number is
 // incremented instead of a new one being generated. This makes sure that two
-// consecutive IDs generated in the same goroutine are different and sortable.
+// consecutive IDs generated in the same goroutine are different and ordered.
 //
 // It is safe for concurrent use as it provides its own locking.
 //
@@ -45,7 +42,7 @@ func OID() string {
 }
 
 // UID is the same as OID accept that the 8 byte timestamp is replaced with
-// an 8 byte random number. These IDs are not sortable.
+// an 8 byte random number. These IDs are not ordered.
 //
 //  +--------+--------+
 //  |  Ent   |   Ent  |
