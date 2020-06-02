@@ -1,4 +1,4 @@
-BIN=uid
+BIN=oid
 CMD=cmd
 BINS=release
 HEAD=$(shell git describe --dirty --long --tags 2> /dev/null  || git rev-parse --short HEAD)

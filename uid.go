@@ -1,4 +1,4 @@
-package uid
+package oid
 
 var (
 	defaultGenerator = DefaultGenerator()

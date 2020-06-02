@@ -5,7 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 
-	"github.com/henderjon/uid"
+	"github.com/henderjon/oid"
 )
 
 func main() {

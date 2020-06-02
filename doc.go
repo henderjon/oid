@@ -1,4 +1,4 @@
-// Package uid provides the ability to generate Un/Ordered Identifiers. These
+// package oid provides the ability to generate Un/Ordered Identifiers. These
 // are also most likely very unique. At the very least, they are unique enough.
 //
 // simplicity > ∞
@@ -24,4 +24,4 @@
 //
 // Both are safe for concurrent use as they provide their own locking. OID will
 // run out of nanoseconds on Fri, 11 Apr 2262 23:47:16 UTC
-package uid
+package oid

@@ -1,3 +1,3 @@
-module github.com/henderjon/uid
+module github.com/henderjon/oid
 
 go 1.14
