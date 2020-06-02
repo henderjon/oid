@@ -19,11 +19,13 @@ var (
 )
 
 // OID returns a base 32 encoded binary encoded string based on timestamp and a
-// random number.
+// random number. The default format for an OID is 8 bytes of time and N bytes
+// of randomness. A UID is N number of bytes, twice.
 //
-//  +--------+--------+
-//  |   TS   |   Ent  |
-//  +--------+--------+
+// OID
+// +----------+----------+
+// |   TIME   |   RAND   |
+// +----------+----------+
 //
 // TS is the binary encoding of an int64 (8 byte) Unix Timestamp in Nanoseconds
 // Ent is the binary encoding of an 8 byte random number
@@ -37,20 +39,24 @@ var (
 // It is safe for concurrent use as it provides its own locking.
 //
 // OID will run out of nanoseconds on Fri, 11 Apr 2262 23:47:16 UTC
+
+// OID generates an ordered ID
 func OID() string {
 	return defaultGenerator.OID()
 }
 
-// UID is the same as OID accept that the 8 byte timestamp is replaced with
-// an 8 byte random number. These IDs are not ordered.
+// UID is the same as OID except that the 8 byte timestamp is replaced with an 8
+// byte random number. In other words, a UID is N number of random bytes, twice.
+// These IDs are not ordered.
 //
-//  +--------+--------+
-//  |  Ent   |   Ent  |
-//  +--------+--------+
-//
-// Ent is the binary encoding of an 8 byte random number
+// UID
+// +----------+----------+
+// |   RAND   |   RAND   |
+// +----------+----------+
 //
 // The 16 bytes are then base32 encoded for human readability and URL safety.
+
+// UID generates an unordered ID
 func UID() string {
 	return defaultGenerator.UID()
 }

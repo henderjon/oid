@@ -36,13 +36,16 @@ func DefaultGenerator() *Generator {
 // entropy length (UID reads the entropy length twice). Entropy length must be
 // greater than 0.
 //
-//  OID                      UID
-//  +----------+----------+  +----------+----------+
-//  |   TIME   |   RAND   |  |   RAND   |   RAND   |
-//  +----------+----------+  +----------+----------+
+// The default format for an OID is 8 bytes of time and N bytes of randomness. A
+// UID is N number of bytes, twice.
 //
-// TS is the binary encoding of an int64 (8 byte) Unix Timestamp in Nanoseconds
-// Ent is the binary encoding of a >=1 byte random number.
+// OID                      UID
+// +----------+----------+  +----------+----------+
+// |   TIME   |   RAND   |  |   RAND   |   RAND   |
+// +----------+----------+  +----------+----------+
+
+// NewGenerator creates a custom O/UID generator that reads $entropyLen number
+// of bytes from $source and uses $enc to encode it as a string
 func NewGenerator(enc EncoderToString, source io.Reader, entropyLen int) *Generator {
 	if entropyLen < 1 {
 		entropyLen = 1
