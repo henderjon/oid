@@ -9,8 +9,7 @@ import (
 	"time"
 )
 
-// Generator wraps all the necessary components for creating UIDs and OIDs in an
-// injectable package.
+// Generator is an injectable way of creating UIDs and OIDs.
 type Generator struct {
 	lastTime int64
 	encoder  EncoderToString
@@ -30,36 +29,23 @@ func DefaultGenerator() *Generator {
 	)
 }
 
-// NewGenerator creates a UID/OID generator based on the given source and the
-// given length to be encoded according to the given encoder. There isn't alot
-// of error checking. Source should have enough bytes to cover double the
-// entropy length (UID reads the entropy length twice). Entropy length must be
-// greater than 0.
-//
-// The default format for an OID is 8 bytes of time and N bytes of randomness. A
-// UID is N number of bytes, twice.
-//
-// OID                      UID
-// +----------+----------+  +----------+----------+
-// |   TIME   |   RAND   |  |   RAND   |   RAND   |
-// +----------+----------+  +----------+----------+
-
-// NewGenerator creates a custom O/UID generator that reads $entropyLen number
-// of bytes from $source and uses $enc to encode it as a string
-func NewGenerator(enc EncoderToString, source io.Reader, entropyLen int) *Generator {
-	if entropyLen < 1 {
-		entropyLen = 1
+// NewGenerator creates a custom UID/OID generator that reads `len` number of
+// bytes from `src` and uses `enc` to encode it as a string. `src` should have
+// enough bytes to cover double the `len` as UID reads `len` twice). `len`
+// should be greater than 0.
+func NewGenerator(enc EncoderToString, src io.Reader, len int) *Generator {
+	if len < 1 {
+		len = 1
 		log.Println("illegal value; entropy length coerced to 1")
 	}
 	return &Generator{
 		encoder:  enc,
-		lastRand: make([]byte, entropyLen),
-		source:   source,
+		lastRand: make([]byte, len),
+		source:   src,
 	}
 }
 
-// OID is the injectable version of `OID()` with a configurable number of random
-// bytes.
+// OID is a configurable and injectable version of `OID()`.
 func (gen *Generator) OID() string {
 	// lock for lastTime, lastRand, and chars
 	gen.mu.Lock()
@@ -84,9 +70,9 @@ func (gen *Generator) OID() string {
 	return gen.encoder.EncodeToString(gen.buf.Bytes())
 }
 
-// UID is the injectable version of `UID()` with a configurable number of random
-// bytes. Be mindfull that whatever entropy length is used, the length of UID
-// will be double as the random []byte is used internally twice.
+// UID is a configurable and injectable version of `OID()`. Be mindfull that
+// whatever `len` was used, the length of the resulting UID will be double as
+// `len` is used internally twice.
 func (gen *Generator) UID() string {
 	// lock for lastTime, lastRand, and chars
 	gen.mu.Lock()

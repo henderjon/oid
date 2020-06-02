@@ -11,13 +11,8 @@ import (
 const doc = `
 %s is a simple utility for generating un/ordered IDs.
 
-The default format for an OID is 8 bytes of time and N bytes of randomness. A
-UID is N number of bytes, twice. Where 'N' is the '-len' param.
-
-OID                      UID
-+----------+----------+  +----------+----------+
-|   TIME   |   RAND   |  |   RAND   |   RAND   |
-+----------+----------+  +----------+----------+
+By default, they are the base 32 encoding of a binary encoded string comprising
+an 8 byte nanosecond precision unix timestamp and an 8 byte random number.
 
 version:  %s
 compiled: %s
