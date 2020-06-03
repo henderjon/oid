@@ -2,7 +2,7 @@ BIN=oid
 CMD=cmd
 BINS=release
 HEAD=$(shell git describe --dirty --long --tags 2> /dev/null  || git rev-parse --short HEAD)
-TIMESTAMP=$(shell date '+%Y-%m-%dT%H:%M:%S %z %Z')
+TIMESTAMP=$(shell date -u '+%Y-%m-%dT%H:%M:%S %z %Z')
 DEPLOYMENT_PATH=apps/$(BIN)-$(HEAD)
 
 LDFLAGS="-X 'main.buildVersion=$(HEAD)' -X 'main.buildTimestamp=$(TIMESTAMP)' -X 'main.compiledBy=$(shell go version)'" # `-s -w` removes some debugging info that might not be necessary in production (smaller binaries)
