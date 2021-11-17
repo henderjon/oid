@@ -3,8 +3,8 @@ package main
 import (
 	"bytes"
 	"flag"
-	"html/template"
 	"os"
+	"text/template"
 )
 
 // Tmpl is a basic man page[-ish] looking template
@@ -25,6 +25,9 @@ DESCRIPTION
 
 OPTIONS
 {{.Options}}
+SEE ALSO
+  https://github.com/chilts/sid, https://github.com/oklog/ulid, https://blog.kowalczyk.info/article/JyRZ/generating-good-unique-ids-in-go.html
+
 VERSION
   version:  {{.Version}}
   compiled: {{.CompiledBy}}

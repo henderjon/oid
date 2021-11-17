@@ -8,6 +8,7 @@ import (
 )
 
 var (
+	num       int
 	length    int
 	unordered bool
 	secure    bool
@@ -24,6 +25,7 @@ func main() {
 		BuildTimestamp: buildTimestamp,
 	})
 
+	flag.IntVar(&num, "num", 1, "the number of u/oids to generate")
 	flag.IntVar(&length, "len", 8, "the number of bytes of randomness to use. Keep in mind that UIDs use double this value for the overall length, while OIDs are this value +8 bytes for the timestamp.")
 	flag.BoolVar(&unordered, "uid", false, "generate an unordered ID (UID) vs the default ordered ID (OID).")
 	flag.BoolVar(&secure, "secure", false, "use a cryptographically secure randomness generator.")
@@ -42,10 +44,12 @@ func main() {
 	}
 
 	gen := oid.NewGenerator(dict, source, length)
-	if unordered {
-		fmt.Println(gen.UID())
-	} else {
-		fmt.Println(gen.OID())
-	}
 
+	for ; num > 0; num-- {
+		if unordered {
+			fmt.Println(gen.UID())
+		} else {
+			fmt.Println(gen.OID())
+		}
+	}
 }
