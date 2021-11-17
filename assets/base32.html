@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Douglas Crockford" />
+<meta name="copyright" content="(C)2021 Douglas Crockford" />
+<meta name="date" content="2021" />
+<meta http-equiv="Expires" content="1968-12-09" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<link rel="stylesheet" href="crockford.css" type="text/css">
+<link rel="icon" type="image/png" href="https://www.crockford.com/favicon.png">
+<title>Base 32</title>
+</head>
+<body>
+<div id="side">
+    <div id="name"><a href="https://www.crockford.com"><big>Douglas Crockford</big></a></div><br>
+    <p><a href="https://www.crockford.com/blog.html">Blog</a></p>
+    <p><a href="https://www.crockford.com/books.html">Books</a></p>
+    <p><a href="https://www.crockford.com/videos.html">Videos</a></p>
+    <p><a href="https://www.crockford.com/2021.html">2021 Appearances</a></p>
+    <p><a href="https://www.crockford.com/javascript/">JavaScript</a></p>
+    <p><a href="https://jslint.com">JSLint</a></p>
+    <p><a href="https://json.org">JSON</a></p>
+    <p><a href="https://github.com/douglascrockford">Github</a></p>
+    <p><a href="https://howjavascriptworks.com/"><i>How JavaScript Works</i></a></p>
+    <p><a href="https://layer8.space/@douglascrockford">Layer8</a></p>
+    <p><a href="https://www.crockford.com/about.html">About</a></p>
+</div>
+<div id="blog">
+<time>2019-03-04</time>
+<h1>Base 32</h1>
+
+<table style="float:right;">
+  <tr>
+    <th>Symbol <br>
+      Value</th>
+    <th>Decode<br>
+      Symbol </th>
+    <th>Encode<br>
+      Symbol </th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td><code>0 O o</code></td>
+    <td><code>0</code></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code>1 I i L l</code></td>
+    <td><code>1</code></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code>2</code></td>
+    <td><code>2</code></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><code>3</code></td>
+    <td><code>3</code></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><code>4</code></td>
+    <td><code>4</code></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><code>5</code></td>
+    <td><code>5</code></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><code>6</code></td>
+    <td><code>6</code></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td><code>7</code></td>
+    <td><code>7</code></td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td><code>8</code></td>
+    <td><code>8</code></td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td><code>9</code></td>
+    <td><code>9</code></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td><code> A a</code></td>
+    <td><code>A</code></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td><code>B b</code></td>
+    <td><code>B</code></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td><code>C c</code></td>
+    <td><code>C</code></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td><code>D d</code></td>
+    <td><code>D</code></td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td><code>E e</code></td>
+    <td><code>E</code></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td><code>F f</code></td>
+    <td><code>F</code></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td><code>G g</code></td>
+    <td><code>G</code></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td><code>H h</code></td>
+    <td><code>H</code></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td><code>J j</code></td>
+    <td><code>J</code></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td><code>K k</code></td>
+    <td><code>K</code></td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td><code>M m</code></td>
+    <td><code>M</code></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td><code>N n</code></td>
+    <td><code>N</code></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td><code> P p</code></td>
+    <td><code>P</code></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td><code>Q q</code></td>
+    <td><code>Q</code></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td><code>R r</code></td>
+    <td><code>R</code></td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td><code>S s</code></td>
+    <td><code>S</code></td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td><code>T t</code></td>
+    <td><code>T</code></td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td><code>V v</code></td>
+    <td><code>V</code></td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td><code>W w</code></td>
+    <td><code>W</code></td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td><code>X x</code></td>
+    <td><code>X</code></td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td><code>Y y</code></td>
+    <td><code>Y</code></td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td><code>Z z</code></td>
+    <td><code>Z</code></td>
+  </tr>
+</table>
+<p><dfn>Base 32</dfn> is a textual 32-symbol notation for expressing numbers in a form
+  that can be conveniently and accurately transmitted between humans and computer
+  systems. It can be used for out of band communication of public keys.</p>
+<h2>Requirements</h2>
+<p>The encoding scheme is required to</p>
+<ul>
+  <li>Be human readable and machine readable.</li>
+  <li>Be compact. Humans have difficulty in manipulating long strings of arbitrary
+    symbols.</li>
+  <li>Be error resistant. Entering the symbols must not require keyboarding gymnastics.</li>
+  <li>Be pronounceable. Humans should be able to accurately transmit the symbols
+    to other humans using a telephone.</li>
+</ul>
+<h2>Base</h2>
+<p>Base 10 is well known and well accepted, but it produces strings that will
+  be unacceptably long. Base 16 is only slightly more compact.</p>
+<p>Base 64 encoding uses a large symbol set containing both upper and lower case
+  letters and many special characters. It is more compact than Base 16, but it
+  is difficult to type and difficult to pronounce.</p>
+<p><dfn>Base 32</dfn> seems the best balance between compactness and error resistance. Each
+  symbol carries 5 bits.</p>
+<h2>Symbols</h2>
+<p>The <dfn>Base 32</dfn> symbol set is a superset of the Base 16 symbol set.</p>
+<p>We chose a symbol set of 10 digits and 22 letters. We exclude 4 of the
+  26 letters: <code>I L O U</code>.</p>
+<table style="float:left;">
+  <tr>
+    <th colspan="2">Excluded Letters</th>
+  </tr>
+  <tr>
+    <td><code>I</code></td>
+    <td>Can be confused with <code>1</code></td>
+  </tr>
+  <tr>
+    <td><code>L</code></td>
+    <td>Can be confused with <code>1</code></td>
+  </tr>
+  <tr>
+    <td><code>O</code></td>
+    <td>Can be confused with <code>0</code></td>
+  </tr>
+  <tr>
+    <td><code>U</code></td>
+    <td>Accidental obscenity</td>
+  </tr>
+</table>
+<p>When decoding, upper and lower case letters are accepted, and <code>i</code>
+  and <code>l</code> will be treated as <code>1</code> and <code>o</code> will
+  be treated as <code>0</code>. When encoding, only upper case letters are used.</p>
+<p>If the bit-length of the number to be encoded is not a multiple of 5 bits,
+  then zero-extend the number to make its bit-length a multiple of 5.</p>
+<p>Hyphens (<code>-</code>) can be inserted into symbol strings. This can partition
+  a string into manageable pieces, improving readability by helping to prevent
+  confusion. Hyphens are ignored during decoding. An application may look for
+  hyphens to assure symbol string correctness.</p>
+<h2>Check</h2>
+<table style="float:left;">
+  <tr>
+    <th>Symbol <br>
+      Value</th>
+    <th>Decode<br>
+      Symbol </th>
+    <th>Encode<br>
+      Symbol </th>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td><code>*</code></td>
+    <td><code>*</code></td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td><code>~</code></td>
+    <td><code>~</code></td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td><code>$</code></td>
+    <td><code>$</code></td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td><code>=</code></td>
+    <td><code>=</code></td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td><code>U u</code></td>
+    <td><code>U</code></td>
+  </tr>
+</table>
+<p>An application may append a check symbol to a symbol string. This check symbol
+  can be used to detect wrong-symbol and transposed-symbol errors. This allows
+  for detecting transmission and entry errors early and inexpensively.</p>
+<p>The check symbol encodes the number <i>modulo</i> 37, 37 being the least prime
+  number greater than 32. We introduce 5 additional symbols that are used only
+  for encoding or decoding the check symbol.</p>
+<p>The additional symbols were selected to not be confused with punctuation or
+  with URL formatting.</p>
+<p align="center"><small><code>0123456789ABCDEFGHJKMNPQRSTVWXYZ *~$=U 2002-11-02</code></small></p>
+
+</div>
+</body>
+</html>
+

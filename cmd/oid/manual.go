@@ -19,9 +19,9 @@ SYNOPSIS
 DESCRIPTION
   By default, it is the base 32 encoding of a binary encoded string comprising an 8 byte nanosecond precision unix timestamp and an 8 byte random number, in that order. The timestamp prefix allows these IDs to be ordered.
 
-  Using '-uid' makes it a base 32 encoding of a binary encoded string comprising two 8 byte random numbers. These are not ordered
+  Using '-uid' makes it a base 32 encoding of a binary encoded string comprising two 8 byte random numbers. These can not be ordered.
 
-  The Crockford base32 dictionary used (https://www.crockford.com/base32.html).
+  The Crockford base32 dictionary is documented at https://www.crockford.com/base32.html.
 
 OPTIONS
 {{.Options}}

@@ -1,0 +1,215 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: 'Programma';
+    font-weight: bold;
+    src: url('woff/Programma-Bold.woff2') format('woff2');
+}
+
+body {
+    background-color: #bfb6a7;
+    display: grid;
+    gap: 1em;
+    grid-template-columns: 14em 1fr;
+    padding: 0.5em;
+}
+
+h4::before {
+    content: "▶ ";
+}
+
+div {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+div.center {
+    padding-bottom: 3em;
+    padding-left: 3em;
+    padding-right: 3em;
+    text-align: center;
+}
+span.black {
+    color: black;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 100%;
+    font-weight: bold;
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
+span.white {
+    color: white;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 100%;
+    font-weight: bold;
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
+span.key {
+    border: 1pt solid black;
+    border-radius: 0.5em 0.5em 0.5em 0.5em;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+p.rule {
+    font-family: "Trebuchet MS", Futura, "Gill Sans", Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    margin-left: 1in;
+    page-break-inside: avoid;
+    text-indent: -2em;
+    white-space: pre-line;
+}
+
+button {
+    border: 1pt solid black;
+    color: black;
+    font-family: sans-serif;
+    font-size: 75%;
+    font-weight: bold;
+    margin: 0.125em;
+    width: 12em;
+}
+button:hover {
+    border-color: white;
+    color: white;
+}
+big {
+    font-size: 200%;
+}
+
+small {
+    font-family: Palatino, Georgia, serif;
+    font-size: 8pt;
+    font-weight: normal;
+    margin-left: 2pt;
+    margin-right: 0.75pt;
+}
+
+#side a, code, pre, time, tt, h4, sup {
+    font-family: Programma, mono;
+    font-size: 100%;
+    font-style: normal;
+    font-weight: bold;
+}
+
+pre {
+    margin-left: 1.2em;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: anywhere;
+}
+
+body, p, i, var, small, code i, pre i, code var, pre var, sub {
+    font-family: Palatino, "Palatino Linotype", serif;
+    font-weight: normal;
+}
+
+i, small, var, code i, pre i, code small, pre small, code var, pre var, h6 {
+    font-style: italic;
+}
+
+table {
+    border: 0;
+    border-spacing: 3pt;
+    margin: 1em;
+}
+th, td {
+    border: 2px solid black;
+    color: black;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+th {
+    background-color: gainsboro;
+}
+td {
+    background-color: white;
+}
+
+dt {
+    float: left;
+    margin-left: 2em;
+    width: 4em;
+}
+dd {
+    margin-top: 0.5em;
+    margin-left: 6em;
+    margin-bottom: 0.5em;
+}
+img {
+    margin: 1em;
+}
+
+div div img {
+    margin: 0;
+}
+
+dfn {
+    font-family: "Trebuchet MS", Futura, "Gill Sans", Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+a {
+    text-decoration: none;
+}
+a:link {
+    color: black;
+}
+a:visited {
+    color: rebeccapurple;
+}
+a:hover {
+    background-color: yellow;
+    color: blue;
+    text-decoration: underline;
+}
+a:active {
+    color: red;
+}
+
+#side div#name {
+    background-color: #78736e;
+    color: white;
+    margin: -1em;
+    padding: 0.5em;
+    text-align: center;
+}
+
+#side div#name  a:hover {
+    background-color: #78736e;
+    color: white;
+}
+
+#side div#name  a:visited {
+    color: white;
+}
+
+#side {
+    background-color: whitesmoke;
+    border: 2pt solid black;
+    color: black;
+    font-family: 'Programma';
+    font-weight: bold;
+    padding: 1em;
+}
+
+#side  a:visited {
+    color: black;
+}
+
+#blog {
+    background-color: whitesmoke;
+    border: 2pt solid black;
+    padding: 1em;
+}
+
+.bar {
+    background-color: black;
+}
