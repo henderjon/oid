@@ -12,6 +12,9 @@ func main() {
 	fmt.Println("OID\t", oid.OID())
 	fmt.Println("UID\t", oid.UID())
 
+	crock := oid.NewGenerator(oid.Crockford32Encoder, oid.MathSource, 4)
+	fmt.Println("Crock RID\t", crock.SID())
+
 	hex := oid.NewGenerator(oid.HexEncoder, oid.MathSource, 8)
 	fmt.Println("hex OID\t", hex.OID())
 	fmt.Println("hex UID\t", hex.UID())

@@ -9,6 +9,12 @@ import (
 	"time"
 )
 
+type GeneratorInterface interface {
+	OID() string // generate a random, orderable ID
+	UID() string // generate a random, Un-orderable ID
+	SID() string // generate a shorter random, Un-orderable ID
+}
+
 // Generator is an injectable way of creating UIDs and OIDs.
 type Generator struct {
 	lastTime int64
@@ -70,7 +76,7 @@ func (gen *Generator) OID() string {
 	return gen.encoder.EncodeToString(gen.buf.Bytes())
 }
 
-// UID is a configurable and injectable version of `OID()`. Be mindfull that
+// UID is a configurable and injectable version of `OID()`. Be mindful that
 // whatever `len` was used, the length of the resulting UID will be double as
 // `len` is used internally twice.
 func (gen *Generator) UID() string {
@@ -81,6 +87,19 @@ func (gen *Generator) UID() string {
 	gen.buf.Reset() // clean our buffer before use
 	gen.source.Read(gen.lastRand)
 	binary.Write(&gen.buf, binary.BigEndian, gen.lastRand)
+	gen.source.Read(gen.lastRand)
+	binary.Write(&gen.buf, binary.BigEndian, gen.lastRand)
+	return gen.encoder.EncodeToString(gen.buf.Bytes())
+}
+
+// SID is a configurable and injectable version of `UID()` but does not double
+// the number of bytes used. This simply encodes N number of bytes.
+func (gen *Generator) SID() string {
+	// lock for lastTime, lastRand, and chars
+	gen.mu.Lock()
+	defer gen.mu.Unlock()
+
+	gen.buf.Reset() // clean our buffer before use
 	gen.source.Read(gen.lastRand)
 	binary.Write(&gen.buf, binary.BigEndian, gen.lastRand)
 	return gen.encoder.EncodeToString(gen.buf.Bytes())

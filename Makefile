@@ -1,14 +1,14 @@
 ################################################################################
 #### INSTALLATION VARS
 ################################################################################
-PREFIX=/usr/local
+PREFIX=$(HOME)
 
 ################################################################################
 #### BUILD VARS
 ################################################################################
 BIN=oid
-BINS_DIR=bin
-CMD_DIR=cmd
+BINDIR=bin
+CMDDIR=cmd
 HEAD=$(shell git describe --dirty --long --tags 2> /dev/null  || git rev-parse --short HEAD)
 TIMESTAMP=$(shell TZ=UTC date '+%FT%T %Z')
 DEPLOYMENT_PATH=apps/$(BIN)-$(HEAD)
@@ -35,20 +35,22 @@ check:
 
 .PHONY: clean
 clean:
-	rm -f $(BIN) $(BIN)-* $(BINS_DIR)/$(BIN) $(BINS_DIR)/$(BIN)-*
+	rm -f $(BIN) $(BIN)-* $(BINDIR)/$(BIN) $(BINDIR)/$(BIN)-*
 
 ################################################################################
 #### INSTALL
 ################################################################################
 
 .PHONY: install
-install:
-	mkdir -p $(PREFIX)/bin
-	cp $(BINS_DIR)/$(BIN) $(PREFIX)/bin/$(BIN)
+install: local
+	mkdir -p $(PREFIX)/$(BINDIR)
+	mv $(BINDIR)/$(BIN) $(PREFIX)/$(BINDIR)/$(BIN)
+	@echo "\ninstalled $(BIN) to $(PREFIX)/$(BINDIR)\n"
+
 
 .PHONY: uninstall
 uninstall:
-	rm -f $(PREFIX)/bin/$(BIN)
+	rm -f $(PREFIX)/$(BINDIR)/$(BIN)
 
 ################################################################################
 #### ENV BUILDS
@@ -56,7 +58,7 @@ uninstall:
 
 .PHONY: local
 local: clean
-	go build -ldflags $(LDFLAGS) -o $(BINS_DIR)/$(BIN) ./$(CMD_DIR)/$(BIN)
+	go build -ldflags $(LDFLAGS) -o $(BINDIR)/$(BIN) ./$(CMDDIR)/$(BIN)
 
 
 
